@@ -14,10 +14,10 @@ includedir={- $OUT = '';
 enginesdir=${libdir}/{- $OpenSSL::safe::installdata::ENGINESDIR_REL_LIBDIR[0] -}
 modulesdir=${libdir}/{- $OpenSSL::safe::installdata::MODULESDIR_REL_LIBDIR[0] -}
 
-Name: OpenSSL-libcrypto
+Name: OpenSSL-libcrypto{- OpenSSL::safe::installdata::_variant_suffix() -}
 Description: OpenSSL cryptography library
 Version: {- $OpenSSL::safe::installdata::VERSION -}
-Libs: -L${libdir} -lcrypto
+Libs: -L${libdir} -lcrypto{- OpenSSL::safe::installdata::_variant_suffix() -}
 Libs.private: {- join(' ', @OpenSSL::safe::installdata::LDLIBS) -}
 Cflags:{- $OUT = ' -I${includedir}';
           if (scalar @OpenSSL::safe::installdata::INCLUDEDIR_REL_PREFIX > 1) {

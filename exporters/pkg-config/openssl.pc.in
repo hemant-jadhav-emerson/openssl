@@ -12,7 +12,7 @@ includedir={- $OUT = '';
               $OUT .= '${prefix}/' . $_ . ' '
                   foreach (@OpenSSL::safe::installdata::INCLUDEDIR_REL_PREFIX); -}
 
-Name: OpenSSL
+Name: OpenSSL{- OpenSSL::safe::installdata::_variant_suffix() -}
 Description: Secure Sockets Layer and cryptography libraries and tools
 Version: {- $OpenSSL::safe::installdata::VERSION -}
-Requires: libssl libcrypto
+Requires: libssl{- OpenSSL::safe::installdata::_variant_suffix() -} libcrypto{- OpenSSL::safe::installdata::_variant_suffix() -}

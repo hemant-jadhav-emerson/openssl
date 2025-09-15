@@ -12,11 +12,11 @@ includedir={- $OUT = '';
               $OUT .= '${prefix}/' . $_ . ' '
                   foreach (@OpenSSL::safe::installdata::INCLUDEDIR_REL_PREFIX); -}
 
-Name: OpenSSL-libssl
+Name: OpenSSL-libssl{- OpenSSL::safe::installdata::_variant_suffix() -}
 Description: Secure Sockets Layer and cryptography libraries
 Version: {- $OpenSSL::safe::installdata::VERSION -}
-Requires.private: libcrypto
-Libs: -L${libdir} -lssl
+Requires.private: libcrypto{- OpenSSL::safe::installdata::_variant_suffix() -}
+Libs: -L${libdir} -lssl{- OpenSSL::safe::installdata::_variant_suffix() -}
 Cflags:{- $OUT = ' -I${includedir}';
           if (scalar @OpenSSL::safe::installdata::INCLUDEDIR_REL_PREFIX > 1) {
               $OUT = '';

@@ -4,6 +4,8 @@
    use platform;
    use Data::Dumper;
 
+   # Generate library information, including variant support
+   # The platform functions automatically incorporate shlib_variant
    our %lib_info = (
        map { my %x = ();
              my $lib_static = platform->staticlib($_);
