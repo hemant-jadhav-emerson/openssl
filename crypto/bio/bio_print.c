@@ -92,7 +92,7 @@ int ossl_BIO_snprintf_msvc(char *buf, size_t n, const char *format, ...)
 int BIO_vprintf(BIO *bio, const char *format, va_list args)
 {
     va_list cp_args;
-#if !defined(_MSC_VER) || _MSC_VER > 1900
+#if !defined(_MSC_VER) || _MSC_VER >= 1900
     int sz;
 #endif
     int ret = -1;
