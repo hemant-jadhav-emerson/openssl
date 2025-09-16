@@ -156,6 +156,27 @@ our \@LDLIBS                     =
     : split(/ +/, '$values{LDLIBS}->[0]');
 our \$SHLIB_VARIANT              = '$values{SHLIB_VARIANT}->[0]';
 
+# _variant_suffix
+#
+# This function returns the SHLIB_VARIANT suffix for library names.
+# If SHLIB_VARIANT is defined and non-empty, it returns "-{variant}",
+# otherwise it returns an empty string.
+
+sub _variant_suffix {
+    return \$SHLIB_VARIANT ? "-\$SHLIB_VARIANT" : "";
+}
+
+# _lib_name BASE
+#
+# This function takes a base library name and appends the variant suffix.
+# It combines the base name with the result of _variant_suffix() to create
+# a complete library name that includes the variant when applicable.
+
+sub _lib_name {
+    my \$base = shift;
+    return \$base . _variant_suffix();
+}
+
 1;
 _____
 
@@ -180,25 +201,4 @@ sub _pairs (@) {
         push @pairlist, $x;
     }
     return @pairlist;
-}
-
-# _variant_suffix
-#
-# This function returns the SHLIB_VARIANT suffix for library names.
-# If SHLIB_VARIANT is defined and non-empty, it returns "-{variant}",
-# otherwise it returns an empty string.
-
-sub _variant_suffix {
-    return \$SHLIB_VARIANT ? "-\$SHLIB_VARIANT" : "";
-}
-
-# _lib_name BASE
-#
-# This function takes a base library name and appends the variant suffix.
-# It combines the base name with the result of _variant_suffix() to create
-# a complete library name that includes the variant when applicable.
-
-sub _lib_name {
-    my \$base = shift;
-    return \$base . _variant_suffix();
 }
