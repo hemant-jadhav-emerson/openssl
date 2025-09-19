@@ -27,7 +27,7 @@ use OpenSSL::config;
 my $orig_death_handler = $SIG{__DIE__};
 $SIG{__DIE__} = \&death_handler;
 
-my $usage="Usage: Configure [no-<feature> ...] [enable-<feature> ...] [-Dxxx] [-lxxx] [-Lxxx] [-fxxx] [-Kxxx] [no-hw-xxx|no-hw] [[no-]threads] [[no-]thread-pool] [[no-]default-thread-pool] [[no-]shared] [[no-]zlib|zlib-dynamic] [no-asm] [no-egd] [sctp] [386] [--prefix=DIR] [--openssldir=OPENSSLDIR] [--with-xxx[=vvv]] [--config=FILE] os/compiler[:flags]\n";
+my $usage="Usage: Configure [no-<feature> ...] [enable-<feature> ...] [-Dxxx] [-lxxx] [-Lxxx] [-fxxx] [-Kxxx] [no-hw-xxx|no-hw] [[no-]threads] [[no-]thread-pool] [[no-]default-thread-pool] [[no-]shared] [[no-]zlib|zlib-dynamic] [no-asm] [no-egd] [sctp] [386] [--prefix=DIR] [--openssldir=OPENSSLDIR] [--shlib-variant=VARIANT] [--with-xxx[=vvv]] [--config=FILE] os/compiler[:flags]\n";
 
 my $banner = <<"EOF";
 
@@ -61,6 +61,11 @@ EOF
 #               given with --prefix.
 #               This becomes the value of OPENSSLDIR in Makefile and in C.
 #               (Default: PREFIX/ssl)
+# --shlib-variant=VARIANT
+#               Specify a variant name for shared libraries. This appends
+#               "-VARIANT" to library names and creates variant-specific
+#               installation paths for pkg-config and CMake files.
+#               (Default: none)
 # --banner=".." Output specified text instead of default completion banner
 #
 # -w            Don't wait after showing a Configure warning
@@ -1045,6 +1050,15 @@ while (@argvcopy)
                 elsif (/^--openssldir=(.*)$/)
                         {
                         $config{openssldir}=$1;
+                        }
+                elsif (/^--shlib-variant=(.*)$/)
+                        {
+                        my $variant = $1;
+                        # Validate variant name (alphanumeric and hyphens only)
+                        if ($variant !~ /^[a-zA-Z0-9-]+$/) {
+                            die "Invalid shlib-variant '$variant': only alphanumeric characters and hyphens allowed\n";
+                        }
+                        $config{shlib_variant}=$variant;
                         }
                 elsif (/^--with-jitter-include=(.*)$/)
                         {

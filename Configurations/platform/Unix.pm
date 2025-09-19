@@ -48,9 +48,10 @@ sub staticname {
     return $in_libname
         if $unified_info{attributes}->{libraries}->{$_[1]}->{noinst};
 
-    # We currently return the same name anyway...  but we might choose to
-    # append '_static' or '_a' some time in the future.
-    return platform::BASE->staticname($_[1]);
+    # For installed libraries, include variant in the name
+    my $variant = $_[0]->shlibvariant();
+    my $base = platform::BASE->staticname($_[1]);
+    return $variant ? "${base}-${variant}" : $base;
 }
 
 sub sharedname {

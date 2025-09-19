@@ -147,6 +147,11 @@ foreach my $pair (@subdirs) {
     }
 }
 
+# Calculate SHLIB_VARIANT value, handling the case where it might not be defined
+my $shlib_variant = ($values{SHLIB_VARIANT} && @{$values{SHLIB_VARIANT}} > 0) 
+                    ? $values{SHLIB_VARIANT}->[0] 
+                    : "";
+
 print <<_____;
 our \$VERSION                    = '$values{VERSION}->[0]';
 our \@LDLIBS                     =
@@ -154,7 +159,7 @@ our \@LDLIBS                     =
     \$^O eq 'VMS'
     ? split(/ *, */, '$values{LDLIBS}->[0]')
     : split(/ +/, '$values{LDLIBS}->[0]');
-our \$SHLIB_VARIANT              = '$values{SHLIB_VARIANT}->[0]';
+our \$SHLIB_VARIANT              = '$shlib_variant';
 
 # _variant_suffix
 #

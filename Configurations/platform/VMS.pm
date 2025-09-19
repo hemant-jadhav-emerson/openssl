@@ -44,6 +44,7 @@ sub staticname {
 
     return platform::BASE::__concat($_[0]->osslprefix(),
                                     platform::BASE->staticname($_[1]),
+                                    ($_[0]->shlibvariant() // ''),
                                     $target{pointer_size});
 }
 

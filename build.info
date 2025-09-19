@@ -134,6 +134,6 @@ GENERATE[builddata.pm]=util/mkinstallvars.pl \
     PREFIX=. BINDIR=apps APPLINKDIR=ms \
     LIBDIR= INCLUDEDIR=include "INCLUDEDIR=$(SRCDIR)/include" \
     ENGINESDIR=engines MODULESDIR=providers \
-    "VERSION=$(VERSION)" "LDLIBS=$(LIB_EX_LIBS)"
+    "VERSION=$(VERSION)" "LDLIBS=$(LIB_EX_LIBS)" "SHLIB_VARIANT=$(SHLIB_VARIANT)"
 
 DEPEND[""]=openssl.pc

@@ -89,6 +89,7 @@ MAJOR={- $config{major} -}
 MINOR={- $config{minor} -}
 SHLIB_VERSION_NUMBER={- $config{shlib_version} -}
 SHLIB_TARGET={- $target{shared_target} -}
+SHLIB_VARIANT={- $config{shlib_variant} // "" -}
 
 LIBS={- join(" \\\n" . ' ' x 5,
              fill_lines(" ", $COLUMNS - 5,
@@ -348,8 +349,8 @@ BINDIR={- our $bindir = $config{bindir};
 bindir={- file_name_is_absolute($bindir)
           ? $bindir : '$(INSTALLTOP)/$(BINDIR)' -}
 
-PKGCONFIGDIR=$(libdir)/pkgconfig
-CMAKECONFIGDIR=$(libdir)/cmake/OpenSSL
+PKGCONFIGDIR=$(libdir){- $config{shlib_variant} ? "/openssl-$config{shlib_variant}" : "" -}/pkgconfig
+CMAKECONFIGDIR=$(libdir)/cmake/OpenSSL{- $config{shlib_variant} ? "-$config{shlib_variant}" : "" -}
 
 MANDIR=$(INSTALLTOP)/share/man
 DOCDIR=$(INSTALLTOP)/share/doc/$(BASENAME)

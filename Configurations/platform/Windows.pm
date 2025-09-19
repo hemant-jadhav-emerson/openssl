@@ -35,8 +35,11 @@ sub staticname {
 
     # To make sure not to clash with an import library, we make the static
     # variant of our installed libraries get '_static' added to their names.
-    return platform::BASE->staticname($_[1])
-        . ($disabled{shared} ? '' : '_static');
+    # Also include variant if specified.
+    my $base = platform::BASE->staticname($_[1]);
+    my $suffix = ($disabled{shared} ? '' : '_static');
+    my $variant = $_[0]->shlibvariant();
+    return $variant ? "${base}-${variant}${suffix}" : "${base}${suffix}";
 }
 
 # To mark forward compatibility, we include the OpenSSL major release version

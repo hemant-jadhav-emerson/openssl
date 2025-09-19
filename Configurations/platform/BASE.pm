@@ -22,7 +22,11 @@ sub depext      { '.d' }
 # .s, .S        Assembler files.  This is an actual extension on Unix
 # .res          Resource file.  This is an actual extension on Windows
 
-sub binname     { return $_[1] } # Name of executable binary
+sub binname     { 
+    my $base = $_[1];
+    my $variant = $target{shlib_variant} || '';
+    return $variant ? "$base-$variant" : $base;
+}
 sub dsoname     { return $_[1] } # Name of dynamic shared object (DSO)
 sub sharedname  { return __isshared($_[1]) ? $_[1] : undef } # Name of shared lib
 sub staticname  { return __base($_[1], '.a') } # Name of static lib
